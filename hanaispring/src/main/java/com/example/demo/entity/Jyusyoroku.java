@@ -17,7 +17,6 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="jyusyoroku2")
-
 public class Jyusyoroku implements Serializable{
 /**
  * ID

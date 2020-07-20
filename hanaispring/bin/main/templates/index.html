@@ -21,6 +21,7 @@
 				<th>名前</th>
 				<th>住所</th>
 				<th>電話番号</th>
+				<th colspan="2"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +30,18 @@
 				<td th:text="*{name}"></td>
 				<td th:text="*{address}"></td>
 				<td th:text="*{tel}"></td>
+				<!-- nameでボタンの区別 -->
+				<!-- idのみ送信 -->
+				<form th:action="@{/edit}" method="post">
+					<input type="submit" class="btn btn-outline-primary" name="edit"
+						value="編集"> <input type="hidden" name="id"
+						th:value="${jyusyoroku.id}">
+				</form>
+				<form th:action="@{/delete}" method="post">
+					<input type="submit" class="btn btn-outline-danger" name="delete"
+						value="削除"> <input type="hidden" name="id"
+						th:value="${jyusyoroku.id}">
+				</form>
 			</tr>
 		</tbody>
 	</table>

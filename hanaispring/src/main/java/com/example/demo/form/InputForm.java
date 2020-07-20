@@ -7,6 +7,11 @@ import lombok.Data;
 @Data
 public class InputForm implements Serializable{
 	/**
+	 * id
+	 */
+	private long id;
+
+	/**
 	 * name
 	 */
 	private String name;
@@ -20,11 +25,6 @@ public class InputForm implements Serializable{
 	 * tel
 	 */
 	private String tel;
-
-	/**
-	 * categoryid
-	 */
-	private String categoryid;
 
 	/**
 	 * delete_flg
