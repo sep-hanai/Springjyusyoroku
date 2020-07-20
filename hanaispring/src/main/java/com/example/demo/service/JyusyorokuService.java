@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Jyusyoroku;
-import com.example.demo.form.InputForm;
 import com.example.demo.repository.JyusyorokuRepository;
 
 /**
@@ -29,7 +28,7 @@ public class JyusyorokuService {
   * @return 検索結果
   */
  public List<Jyusyoroku> searchAll(){
-	 return jyusyorokuRepository.findAll();
+	 return jyusyorokuRepository.findAllOrderById();
  }
 
 
@@ -37,8 +36,8 @@ public class JyusyorokuService {
 	 * 新規登録
 	 * @parem jyusyoroku 登録情報
 	 */
-	public void create(InputForm inputForm) {
-		jyusyorokuRepository.save(CreateUser(inputForm));
+	public void create(Jyusyoroku jyusyoroku) {
+		jyusyorokuRepository.save(jyusyoroku);
 	}
 
  /**
@@ -46,15 +45,15 @@ public class JyusyorokuService {
   * @param jyusyo
   * @return entity
   */
-	private Jyusyoroku CreateUser(InputForm inputForm) {
-
-		Jyusyoroku user = new Jyusyoroku();
-		user.setName(inputForm.getName());
-		user.setAddress(inputForm.getAddress());
-		user.setTel(inputForm.getTel());
-		user.setDelete_flg(inputForm.getDelete_flg());
-		return user;
- }
+//	private Jyusyoroku CreateUser(InputForm inputForm) {
+//
+//		Jyusyoroku user = new Jyusyoroku();
+//		user.setName(inputForm.getName());
+//		user.setAddress(inputForm.getAddress());
+//		user.setTel(inputForm.getTel());
+//		user.setDelete_flg(inputForm.getDelete_flg());
+//		return user;
+// }
 
 	/**
 	 * 編集 update 処理

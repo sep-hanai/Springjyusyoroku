@@ -16,7 +16,7 @@ public interface JyusyorokuRepository extends JpaRepository<Jyusyoroku, Long>{
 	/**
 	 * 一件取得
 	 */
-    @Query("SELECT j FROM Jyusyoroku ORDER BY j.id")
+    @Query("SELECT j FROM Jyusyoroku j ORDER BY j.id")
     List<Jyusyoroku> findAllOrderById();
 }
 

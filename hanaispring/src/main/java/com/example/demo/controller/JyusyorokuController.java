@@ -59,25 +59,24 @@ public class JyusyorokuController {
 	}
 
 	/**
-	 * 戻るボタン押下
-	 * @return 一覧画面表示
-	 */
-	@RequestMapping(value="/back", method=RequestMethod.POST)
-	public String back() {
-				return "redirect:/";
-	}
-
-	/**
 	 * 登録処理
 	 * @param inputForm
 	 * @return 一覧画面表示
 	 */
-	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public String create(@ModelAttribute InputForm inputForm, Model model) {
-		// ユーザー情報の登録
-				jyusyorokuService.create(inputForm);
-				return "redirect:/";
-		}
+//	@RequestMapping(value="/create", method=RequestMethod.POST)
+//	public String create(@ModelAttribute InputForm inputForm, Model model) {
+//		// ユーザー情報の登録
+//				jyusyorokuService.create(inputForm);
+//				return "redirect:/";
+//		}
+	 @PostMapping("create")
+	    String regist(@ModelAttribute InputForm inputForm) {
+	        Jyusyoroku jyusyoroku = new Jyusyoroku();
+	        BeanUtils.copyProperties(inputForm, jyusyoroku);
+	        jyusyorokuService.create(jyusyoroku);
+	        return "redirect:/";
+	    }
+
 
 	/**
 	 *編集画面へ遷移
@@ -92,14 +91,23 @@ public class JyusyorokuController {
         return "edit";
 	}
 
+	   /**
+	    * 確認画面へ遷移
+	    * @return 確認画面表示
+	    */
+		@RequestMapping(value = "/editcheck", method = RequestMethod.POST)
+		public String editcheck(@ModelAttribute("inputForm")InputForm form) {
+			return "editcheck";
+		}
+
 	/**
 	 * 編集機能実行
 	 */
-	@PostMapping(path = "edit", params = "regist")
+	@PostMapping(path = "update", params = "regist")
 	String regist(@RequestParam Long id, @Validated @ModelAttribute InputForm inputForm, BindingResult result) {
-        if (result.hasErrors()) {
-            return edit(id, inputForm);
-        }
+//        if (result.hasErrors()) {
+//            return edit(id, inputForm);
+//        }
 
         /**
          * 編集 update 処理
@@ -111,4 +119,45 @@ public class JyusyorokuController {
         jyusyorokuService.update(jyusyoroku);
         return "redirect:/";
     }
+
+	/**
+	 * 削除確認画面へ遷移
+	 *@raram jyusyoroku
+	 *@return 削除確認画面表示
+	 */
+	@PostMapping(path = "delete", params = "delete")
+	String delete(@RequestParam Long id, @ModelAttribute InputForm inputForm) {
+		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectById(id);
+		Jyusyoroku jyusyoroku = jyusyoOpt.get();
+		BeanUtils.copyProperties(jyusyoroku, inputForm);
+        return "delete";
+	}
+
+	/**
+	 * 削除機能実行
+	 * 物理的削除
+	 */
+	@PostMapping(path = "update", params = "delete")
+	String delete(@RequestParam Long id, @Validated @ModelAttribute InputForm inputForm, BindingResult result) {
+
+        /**
+         * 削除 update 処理
+         * 一覧画面へ遷移
+         */
+        Jyusyoroku jyusyoroku = new Jyusyoroku();
+        BeanUtils.copyProperties(inputForm, jyusyoroku);
+
+        jyusyorokuService.update(jyusyoroku);
+        return "redirect:/";
+    }
+
+
+	/**
+	 * 戻るボタン押下
+	 * @return 一覧画面表示
+	 */
+	@RequestMapping(value="/back", method=RequestMethod.POST)
+	public String back() {
+				return "redirect:/";
+	}
 }

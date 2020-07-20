@@ -32,16 +32,16 @@
 				<td th:text="*{tel}"></td>
 				<!-- nameでボタンの区別 -->
 				<!-- idのみ送信 -->
-				<form th:action="@{/edit}" method="post">
+				<td><form th:action="@{/edit}" method="post">
 					<input type="submit" class="btn btn-outline-primary" name="edit"
 						value="編集"> <input type="hidden" name="id"
 						th:value="${jyusyoroku.id}">
-				</form>
-				<form th:action="@{/delete}" method="post">
+				</form></td>
+				<td><form th:action="@{/delete}" method="post">
 					<input type="submit" class="btn btn-outline-danger" name="delete"
 						value="削除"> <input type="hidden" name="id"
 						th:value="${jyusyoroku.id}">
-				</form>
+				</form></td>
 			</tr>
 		</tbody>
 	</table>
