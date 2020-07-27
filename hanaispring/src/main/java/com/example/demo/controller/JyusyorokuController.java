@@ -63,12 +63,6 @@ public class JyusyorokuController {
 	 * @param inputForm
 	 * @return 一覧画面表示
 	 */
-//	@RequestMapping(value="/create", method=RequestMethod.POST)
-//	public String create(@ModelAttribute InputForm inputForm, Model model) {
-//		// ユーザー情報の登録
-//				jyusyorokuService.create(inputForm);
-//				return "redirect:/";
-//		}
 	 @PostMapping("create")
 	    String regist(@ModelAttribute InputForm inputForm) {
 	        Jyusyoroku jyusyoroku = new Jyusyoroku();
@@ -115,7 +109,6 @@ public class JyusyorokuController {
          */
         Jyusyoroku jyusyoroku = new Jyusyoroku();
         BeanUtils.copyProperties(inputForm, jyusyoroku);
-
         jyusyorokuService.update(jyusyoroku);
         return "redirect:/";
     }
@@ -151,7 +144,6 @@ public class JyusyorokuController {
         return "redirect:/";
     }
 
-
 	/**
 	 * 戻るボタン押下
 	 * @return 一覧画面表示
@@ -160,4 +152,16 @@ public class JyusyorokuController {
 	public String back() {
 				return "redirect:/";
 	}
-}
+
+	   /**
+	    * 検索機能
+	    * 検索結果
+	    * @return 一覧画面表示
+	    */
+	@RequestMapping(value = "/serch", method = RequestMethod.POST)
+	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm) {
+		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
+		Jyusyoroku jyusyoroku = jyusyoOpt.get();
+		BeanUtils.copyProperties(jyusyoroku, inputForm);
+        return "/";
+	}}

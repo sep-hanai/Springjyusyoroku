@@ -14,7 +14,25 @@
 		<input class="add-input" type="submit" value="新規登録">
 	</form>
 
-	<table>
+		<!-- 住所検索欄 -->
+	<form th:action="@{/serch}" th:object="${inputForm}" method="post">
+		<div style="float: right">
+			<table style="border-collapse: collapse;">
+				<tr>
+				<td style="width:40px;">住所</td>
+				<td><input style="border=1: width:40px;" type="text" name="address" th:field="*{address}"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input
+						style="width: 100%; background: transparent; maxlength=100; border=1: width:40px;"
+						type="submit" value="検索"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+
+	<table class="table">
 		<thead>
 			<tr>
 				<th>ID</th>
