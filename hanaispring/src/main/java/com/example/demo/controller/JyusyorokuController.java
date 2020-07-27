@@ -163,5 +163,5 @@ public class JyusyorokuController {
 		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
 		Jyusyoroku jyusyoroku = jyusyoOpt.get();
 		BeanUtils.copyProperties(jyusyoroku, inputForm);
-        return "/";
+        return "redirect:/";
 	}}
