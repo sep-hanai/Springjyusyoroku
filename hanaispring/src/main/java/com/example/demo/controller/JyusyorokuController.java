@@ -36,6 +36,7 @@ public class JyusyorokuController {
 		List<Jyusyoroku> jyusyolist = jyusyorokuService.searchAll();
 
 		model.addAttribute("jyusyolist", jyusyolist);
+		model.addAttribute("inputForm",new InputForm());
 		return "index";
 	}
 
@@ -63,7 +64,7 @@ public class JyusyorokuController {
 	 * @param inputForm
 	 * @return 一覧画面表示
 	 */
-	 @PostMapping("create")
+	 @PostMapping("/create")
 	    String regist(@ModelAttribute InputForm inputForm) {
 	        Jyusyoroku jyusyoroku = new Jyusyoroku();
 	        BeanUtils.copyProperties(inputForm, jyusyoroku);
@@ -159,9 +160,12 @@ public class JyusyorokuController {
 	    * @return 一覧画面表示
 	    */
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
-	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm) {
-		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
-		Jyusyoroku jyusyoroku = jyusyoOpt.get();
-		BeanUtils.copyProperties(jyusyoroku, inputForm);
-        return "/";
+	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm, Model model) {
+		//Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
+		List<Jyusyoroku> jyusyolist = jyusyorokuService.selectByName(address);
+		model.addAttribute("jyusyolist", jyusyolist);
+		//Jyusyoroku jyusyoroku = jyusyoOpt.get();
+		//BeanUtils.copyProperties(jyusyoroku, inputForm);
+//		model.addAttribute("inputForm",new InputForm());
+        return "index";
 	}}
