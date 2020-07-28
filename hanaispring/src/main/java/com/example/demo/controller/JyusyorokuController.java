@@ -36,6 +36,7 @@ public class JyusyorokuController {
 		List<Jyusyoroku> jyusyolist = jyusyorokuService.searchAll();
 
 		model.addAttribute("jyusyolist", jyusyolist);
+		model.addAttribute("inputForm", new InputForm());
 		return "index";
 	}
 
@@ -49,12 +50,12 @@ public class JyusyorokuController {
 		return "add";
 	}
 
-   /**
-    * 確認画面へ遷移
-    * @return 確認画面表示
-    */
+	/**
+	* 確認画面へ遷移
+	* @return 確認画面表示
+	*/
 	@RequestMapping(value = "/addcheck", method = RequestMethod.POST)
-	public String addcheck(@ModelAttribute("inputForm")InputForm form) {
+	public String addcheck(@ModelAttribute("inputForm") InputForm form) {
 		return "addcheck";
 	}
 
@@ -63,14 +64,13 @@ public class JyusyorokuController {
 	 * @param inputForm
 	 * @return 一覧画面表示
 	 */
-	 @PostMapping("create")
-	    String regist(@ModelAttribute InputForm inputForm) {
-	        Jyusyoroku jyusyoroku = new Jyusyoroku();
-	        BeanUtils.copyProperties(inputForm, jyusyoroku);
-	        jyusyorokuService.create(jyusyoroku);
-	        return "redirect:/";
-	    }
-
+	@PostMapping("/create")
+	String regist(@ModelAttribute InputForm inputForm) {
+		Jyusyoroku jyusyoroku = new Jyusyoroku();
+		BeanUtils.copyProperties(inputForm, jyusyoroku);
+		jyusyorokuService.create(jyusyoroku);
+		return "redirect:/";
+	}
 
 	/**
 	 *編集画面へ遷移
@@ -82,36 +82,36 @@ public class JyusyorokuController {
 		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectById(id);
 		Jyusyoroku jyusyoroku = jyusyoOpt.get();
 		BeanUtils.copyProperties(jyusyoroku, inputForm);
-        return "edit";
+		return "edit";
 	}
 
-	   /**
-	    * 確認画面へ遷移
-	    * @return 確認画面表示
-	    */
-		@RequestMapping(value = "/editcheck", method = RequestMethod.POST)
-		public String editcheck(@ModelAttribute("inputForm")InputForm form) {
-			return "editcheck";
-		}
+	/**
+	 * 確認画面へ遷移
+	 * @return 確認画面表示
+	 */
+	@RequestMapping(value = "/editcheck", method = RequestMethod.POST)
+	public String editcheck(@ModelAttribute("inputForm") InputForm form) {
+		return "editcheck";
+	}
 
 	/**
 	 * 編集機能実行
 	 */
 	@PostMapping(path = "update", params = "regist")
 	String regist(@RequestParam Long id, @Validated @ModelAttribute InputForm inputForm, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return edit(id, inputForm);
-//        }
+		//        if (result.hasErrors()) {
+		//            return edit(id, inputForm);
+		//        }
 
-        /**
-         * 編集 update 処理
-         * 一覧画面へ遷移
-         */
-        Jyusyoroku jyusyoroku = new Jyusyoroku();
-        BeanUtils.copyProperties(inputForm, jyusyoroku);
-        jyusyorokuService.update(jyusyoroku);
-        return "redirect:/";
-    }
+		/**
+		 * 編集 update 処理
+		 * 一覧画面へ遷移
+		 */
+		Jyusyoroku jyusyoroku = new Jyusyoroku();
+		BeanUtils.copyProperties(inputForm, jyusyoroku);
+		jyusyorokuService.update(jyusyoroku);
+		return "redirect:/";
+	}
 
 	/**
 	 * 削除確認画面へ遷移
@@ -123,7 +123,7 @@ public class JyusyorokuController {
 		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectById(id);
 		Jyusyoroku jyusyoroku = jyusyoOpt.get();
 		BeanUtils.copyProperties(jyusyoroku, inputForm);
-        return "delete";
+		return "delete";
 	}
 
 	/**
@@ -133,35 +133,40 @@ public class JyusyorokuController {
 	@PostMapping(path = "update", params = "delete")
 	String delete(@RequestParam Long id, @Validated @ModelAttribute InputForm inputForm, BindingResult result) {
 
-        /**
-         * 削除 update 処理
-         * 一覧画面へ遷移
-         */
-        Jyusyoroku jyusyoroku = new Jyusyoroku();
-        BeanUtils.copyProperties(inputForm, jyusyoroku);
+		/**
+		 * 削除 update 処理
+		 * 一覧画面へ遷移
+		 */
+		Jyusyoroku jyusyoroku = new Jyusyoroku();
+		BeanUtils.copyProperties(inputForm, jyusyoroku);
 
-        jyusyorokuService.update(jyusyoroku);
-        return "redirect:/";
-    }
+		jyusyorokuService.update(jyusyoroku);
+		return "redirect:/";
+	}
 
 	/**
 	 * 戻るボタン押下
 	 * @return 一覧画面表示
 	 */
-	@RequestMapping(value="/back", method=RequestMethod.POST)
+	@RequestMapping(value = "/back", method = RequestMethod.POST)
 	public String back() {
-				return "redirect:/";
+		return "redirect:/";
 	}
 
-	   /**
-	    * 検索機能
-	    * 検索結果
-	    * @return 一覧画面表示
-	    */
+	/**
+	 * 検索機能
+	 * 検索結果
+	 * @return 一覧画面表示
+	 */
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
-	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm) {
-		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
-		Jyusyoroku jyusyoroku = jyusyoOpt.get();
-		BeanUtils.copyProperties(jyusyoroku, inputForm);
-        return "redirect:/";
-	}}
+
+	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm, Model model) {
+		//Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
+		List<Jyusyoroku> jyusyolist = jyusyorokuService.selectByName(address);
+		model.addAttribute("jyusyolist", jyusyolist);
+		//Jyusyoroku jyusyoroku = jyusyoOpt.get();
+		//BeanUtils.copyProperties(jyusyoroku, inputForm);
+		//		model.addAttribute("inputForm",new InputForm());
+		return "index";
+	}
+}

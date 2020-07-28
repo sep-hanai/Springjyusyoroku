@@ -74,7 +74,8 @@ public class JyusyorokuService {
 	/**
 	 * 検索 serch 処理
 	 */
-	public Optional<Jyusyoroku> selectByName(String address) {
-		return jyusyorokuRepository.findByNameLike(address);
+	//public Optional<Jyusyoroku> selectByName(String address) {
+	public List<Jyusyoroku> selectByName(String address) {
+		return jyusyorokuRepository.findByName2(address);
 	}
 }

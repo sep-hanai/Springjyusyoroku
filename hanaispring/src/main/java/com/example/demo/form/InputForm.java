@@ -31,4 +31,6 @@ public class InputForm implements Serializable{
 	 */
 	private String delete_flg;
 
+
+
 }
