@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -90,19 +92,30 @@ public class JyusyorokuController {
 	 * @return 確認画面表示
 	 */
 	@RequestMapping(value = "/editcheck", method = RequestMethod.POST)
-	public String editcheck(@ModelAttribute("inputForm") InputForm form) {
+	public String editcheck(@ModelAttribute("inputForm") InputForm form, HttpServletRequest request, Model model) {
+	//値の受け取り
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String tel = request.getParameter("tel");
+	//serviceからメソッド呼び出し
+		JyusyorokuService svc = new JyusyorokuService();
+		String errAll[];
+		errAll = svc.err(name, address, tel);
+	//エラー判定
+	//エラー有り
+		if (errAll [0] != null || errAll [1] != null || errAll [2] != null) {
+		model.addAttribute("errAll", errAll);
+		return "edit";
+		}else {
+	//エラー無し
 		return "editcheck";
-	}
+	}}
 
 	/**
 	 * 編集機能実行
 	 */
 	@PostMapping(path = "update", params = "regist")
-	String regist(@RequestParam Long id, @Validated @ModelAttribute InputForm inputForm, BindingResult result) {
-		//        if (result.hasErrors()) {
-		//            return edit(id, inputForm);
-		//        }
-
+	String regist(@RequestParam Long id, @ModelAttribute InputForm inputForm) {
 		/**
 		 * 編集 update 処理
 		 * 一覧画面へ遷移
@@ -139,7 +152,6 @@ public class JyusyorokuController {
 		 */
 		Jyusyoroku jyusyoroku = new Jyusyoroku();
 		BeanUtils.copyProperties(inputForm, jyusyoroku);
-
 		jyusyorokuService.update(jyusyoroku);
 		return "redirect:/";
 	}
@@ -159,14 +171,9 @@ public class JyusyorokuController {
 	 * @return 一覧画面表示
 	 */
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
-
 	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm, Model model) {
-		//Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectByName(address);
 		List<Jyusyoroku> jyusyolist = jyusyorokuService.selectByName(address);
 		model.addAttribute("jyusyolist", jyusyolist);
-		//Jyusyoroku jyusyoroku = jyusyoOpt.get();
-		//BeanUtils.copyProperties(jyusyoroku, inputForm);
-		//		model.addAttribute("inputForm",new InputForm());
 		return "index";
 	}
 }

@@ -14,18 +14,19 @@
 		<input class="add-input" type="submit" value="新規登録">
 	</form>
 
-		<!-- 住所検索欄 -->
+	<!-- 住所検索欄 -->
 	<form th:action="@{/serch}" th:object="${inputForm}" method="post">
 		<div style="float: right">
 			<table style="border-collapse: collapse;">
 				<tr>
-				<td style="width:40px;">住所</td>
-				<td><input style="border=1: width:40px;" type="text" th:field="*{address}"></td>
+					<td style="width: 40px;">住所</td>
+					<td><input style="border =1: width:40px;" type="text"
+						th:field="*{address}"></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td><input
-						style="width: 100%; background: transparent; maxlength=100; border=1: width:40px;"
+						style="width: 100%; background: transparent; maxlength =100; border =1: width:40px;"
 						type="submit" value="検索"></td>
 				</tr>
 			</table>
@@ -51,15 +52,15 @@
 				<!-- nameでボタンの区別 -->
 				<!-- idのみ送信 -->
 				<td><form th:action="@{/edit}" method="post">
-					<input type="submit" class="btn btn-outline-primary" name="edit"
-						value="編集"> <input type="hidden" name="id"
-						th:value="${jyusyoroku.id}">
-				</form></td>
+						<input type="submit" class="btn btn-outline-primary" name="edit"
+							value="編集"> <input type="hidden" name="id"
+							th:value="${jyusyoroku.id}">
+					</form></td>
 				<td><form th:action="@{/delete}" method="post">
-					<input type="submit" class="btn btn-outline-danger" name="delete"
-						value="削除"> <input type="hidden" name="id"
-						th:value="${jyusyoroku.id}">
-				</form></td>
+						<input type="submit" class="btn btn-outline-danger" name="delete"
+							value="削除"> <input type="hidden" name="id"
+							th:value="${jyusyoroku.id}">
+					</form></td>
 			</tr>
 		</tbody>
 	</table>

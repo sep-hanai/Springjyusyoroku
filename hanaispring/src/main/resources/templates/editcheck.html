@@ -24,9 +24,11 @@
 				<td><p th:text="*{tel}"></td>
 			</tr>
 		</table>
-		<input type="hidden" name="name" th:field="*{name}"> <input
-			type="hidden" name="address" th:field="*{address}"> <input
-			type="hidden" name="tel" th:field="*{tel}"> <input
+		<input type="hidden" name="name" th:value="*{name}"> <input
+			type="hidden" name="address" th:value="*{address}">
+			<input
+			type="hidden" name="tel" th:value="*{#strings.replace(tel, '-', '')}">
+			 <input
 			type="hidden" name="delete_flg" th:value="0"> <input
 			type="hidden" name="id" th:value="${param.id[0]}">
 		<div class="btn2">

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,21 +41,6 @@ public class JyusyorokuService {
 	}
 
 	/**
-	 * 新規登録
-	 * @param jyusyo
-	 * @return entity
-	 */
-	//	private Jyusyoroku CreateUser(InputForm inputForm) {
-	//
-	//		Jyusyoroku user = new Jyusyoroku();
-	//		user.setName(inputForm.getName());
-	//		user.setAddress(inputForm.getAddress());
-	//		user.setTel(inputForm.getTel());
-	//		user.setDelete_flg(inputForm.getDelete_flg());
-	//		return user;
-	// }
-
-	/**
 	 * 編集,削除 update 処理
 	 * @param jyusyoroku
 	 */
@@ -74,8 +60,54 @@ public class JyusyorokuService {
 	/**
 	 * 検索 serch 処理
 	 */
-	//public Optional<Jyusyoroku> selectByName(String address) {
 	public List<Jyusyoroku> selectByName(String address) {
 		return jyusyorokuRepository.findByName2(address);
+	}
+
+	/**
+	 * エラーチェック
+	 * @return errmsg
+	 */
+	public String[] err(String name, String address, String tel) {
+
+		String errmsg = "";
+		String errmsg2 = "";
+		String errmsg3 = "";
+		try {
+			if (name.getBytes("Shift_JIS").length > 40) {
+				errmsg = "名前は全角20文字以内で入力してください";
+			}
+			if (name.getBytes("Shift_JIS").length == 0) {
+				errmsg = "名前は必須項目です";
+			}
+			if (address.getBytes("Shift_JIS").length > 80) {
+				errmsg2 = "住所は全角40文字以内で入力してください";
+			}
+			if (address.getBytes("Shift_JIS").length == 0) {
+				errmsg2 = "住所は必須項目です";
+			}
+
+			int t = tel.getBytes("Shift_JIS").length;
+			if (tel == "") {
+			} else if (tel.matches(".*^0[0-9]{2}-[0-9]{4}-[0-9]{4}.*") != true || 13 < t || (1 <= t && 13 > t)) {
+				errmsg3 = "電話番号は「000-0000-0000」の形式で入力してください";
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		//			String errAll[] = {errmsg, errmsg2, errmsg3};
+		//配列を用意、エラーがあれば要素に追加
+		String errAll[] = new String[3];
+		if (errmsg != "") {
+			errAll[0] = errmsg;
+		}
+		if (errmsg2 != "") {
+			errAll[1] = errmsg2;
+		}
+		if (errmsg3 != "") {
+			errAll[2] = errmsg3;
+		}
+		return errAll;
 	}
 }
