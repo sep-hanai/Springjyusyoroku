@@ -73,8 +73,12 @@ public class JyusyorokuService {
 	/**
 	 * 検索 serch 処理
 	 */
-	public List<Jyusyoroku> selectByName(String address) {
-		return jyusyorokuRepository.findByName(address);
+//	public List<Jyusyoroku> selectByName(String address) {
+//		return jyusyorokuRepository.findByName(address);
+//	}
+
+	public Page<Jyusyoroku> selectByName(String address, Pageable pageable) {
+		return jyusyorokuRepository.findByName(address, pageable);
 	}
 
 	/**

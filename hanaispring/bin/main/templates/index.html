@@ -33,7 +33,7 @@
 		</div>
 	</form>
 
-<div class="pagiNation">
+<!--  <div class="pagiNation">
   <ul>
     <li style="display:inline;">
       <span th:if="${page.first}">&lt;&lt;前</span>
@@ -66,7 +66,36 @@
       </a>
     </li>
   </ul>
-</div>
+</div>-->
+<div th:fragment='paginationbar'>
+            <ul class='pagination pagination-centered'>
+                <li th:class="${page.firstPage}?'disabled':''" style="display:inline">
+                    <span th:if='${page.firstPage}'><<</span>
+                    <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'><<</a>
+                </li>
+                <li th:class="${page.hasPreviousPage}? '' : 'disabled'" style="display:inline">
+                    <span th:if='${not page.hasPreviousPage}'><</span>
+                    <a th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'><</a>
+                </li>
+
+
+                <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''" style="display:inline">
+                    <span th:if='${item.current}' th:text='${item.number}'>1</span>
+                    <a th:if='${not item.current}' th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'>
+                    <span th:text='${item.number}'>1</span>
+                    </a>
+                </li>
+                <li th:class="${page.hasNextPage}? '' : 'disabled'" style="display:inline">
+                    <span th:if='${not page.hasNextPage}'>></span>
+                    <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}'>></a>
+                </li>
+                <li th:class="${page.lastPage}? 'disabled' : ''" style="display:inline">
+                    <span th:if='${page.lastPage}'>>></span>
+                    <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>>></a>
+                </li>
+            </ul>
+        </div>
+
 
 	<table class="table">
 		<thead>

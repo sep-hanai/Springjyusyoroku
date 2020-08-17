@@ -27,10 +27,14 @@ public interface JyusyorokuRepository extends JpaRepository<Jyusyoroku, Long> {
 	@Query("SELECT j FROM Jyusyoroku j WHERE j.delete_flg=0 ORDER BY j.id")
 	List<Jyusyoroku> findAllOrderById();
 
-	@Query("SELECT j FROM Jyusyoroku j WHERE j.delete_flg=0 AND j.address LIKE %:address% ORDER BY j.id")
-	List<Jyusyoroku> findByName(String address);
+//	@Query("SELECT j FROM Jyusyoroku j WHERE j.delete_flg=0 AND j.address LIKE %:address% ORDER BY j.id")
+//	List<Jyusyoroku> findByName(@Param("address") String address);
+
+//	@Query("SELECT j FROM Jyusyoroku j WHERE j.delete_flg=0 AND j.address LIKE %:address% ORDER BY j.id")
+//	Page<InputForm> findByName(@Param("address") String address, Pageable pageble);
+
 
 	@Query(value = "SELECT * FROM Jyusyoroku WHERE delete_flg=0 AND address LIKE %:address% ORDER BY id" , nativeQuery  = true)
-	List<Jyusyoroku> findByName2(@Param("address") String address);
+	Page<Jyusyoroku> findByName(@Param("address") String address, Pageable pageable);
 
 }

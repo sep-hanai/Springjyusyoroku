@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Jyusyoroku;
 import com.example.demo.form.InputForm;
+import com.example.demo.pageWrapper.PageWrapper;
 import com.example.demo.service.JyusyorokuService;
 
 @Controller
@@ -51,12 +51,21 @@ public class JyusyorokuController {
 	 */
 	@RequestMapping(value="/", method=RequestMethod.GET)
 
+//	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
+//
+//        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+//
+//        model.addAttribute("page", playerPage);
+//        model.addAttribute("jyusyolist", playerPage.getContent());
+//        model.addAttribute("inputForm", new InputForm());
+//
+//        return "index";
+//    }
 	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
-
-        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
-
-        model.addAttribute("page", playerPage);
-        model.addAttribute("jyusyolist", playerPage.getContent());
+		 Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+		 PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
+		 model.addAttribute("page", page);
+		 model.addAttribute("jyusyolist", playerPage.getContent());
         model.addAttribute("inputForm", new InputForm());
 
         return "index";
@@ -65,18 +74,26 @@ public class JyusyorokuController {
 	/**
 	 * ページ選択時
 	 */
-	@RequestMapping(value="/jyusyolist", method=RequestMethod.GET)
+	@RequestMapping(value="/index", method=RequestMethod.GET)
 
 	public String paging(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 
-        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+//        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+//
+//        model.addAttribute("page", playerPage);
+//        model.addAttribute("jyusyolist", playerPage.getContent());
+//        model.addAttribute("inputForm", new InputForm());
+//
+//        return "index";
+//    }
+		 Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+		 PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
+		 model.addAttribute("page", page);
+		 model.addAttribute("jyusyolist", playerPage.getContent());
+         model.addAttribute("inputForm", new InputForm());
 
-        model.addAttribute("page", playerPage);
-        model.addAttribute("jyusyolist", playerPage.getContent());
-        model.addAttribute("inputForm", new InputForm());
-
-        return "index";
-    }
+       return "index";
+   }
 
 	/**
 	 * 新規登録画面へ遷移
@@ -207,9 +224,21 @@ public class JyusyorokuController {
 	 * @return 一覧画面表示
 	 */
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
-	String serch(@RequestParam String address, @ModelAttribute InputForm inputForm, Model model) {
-		List<Jyusyoroku> jyusyolist = jyusyorokuService.selectByName(address);
-		model.addAttribute("jyusyolist", jyusyolist);
+//	String serch(@RequestParam String address, @PageableDefault(page = 0, size = 10) Pageable pageable, InputForm inputForm, Model model) {
+//		Page<InputForm> playerPage = jyusyorokuService.selectByName(address,pageable);
+//		 PageWrapper<InputForm> page = new PageWrapper<InputForm>(playerPage, "/index");
+//		 model.addAttribute("page", page);
+//		 model.addAttribute("jyusyolist", playerPage.getContent());
+//		 model.addAttribute("jyusyolist", playerPage);
+//		return "index";
+//	}
+	String serch(@PageableDefault(page = 0, size = 10) Pageable pageable, InputForm inputForm, Model model, @RequestParam String address) {
+		Page<Jyusyoroku> playerPage = jyusyorokuService.selectByName(address, pageable);
+		PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
+		model.addAttribute("page", page);
+		model.addAttribute("jyusyolist", playerPage.getContent());
+
 		return "index";
 	}
+
 }
