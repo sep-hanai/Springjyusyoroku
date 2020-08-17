@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,15 +35,48 @@ public class JyusyorokuController {
 	 * @param model
 	 * @return 住所録一覧表示
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String helloWorld(Model model) {
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String helloWorld(Model model) {
+//		List<Jyusyoroku> jyusyolist = jyusyorokuService.searchAll();
+//		model.addAttribute("jyusyolist", jyusyolist);
+//		model.addAttribute("inputForm", new InputForm());
+//		return "index";
+//	}
 
-		List<Jyusyoroku> jyusyolist = jyusyorokuService.searchAll();
+	/**
+	 * ページングあり
+	 * @param pageable
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/", method=RequestMethod.GET)
 
-		model.addAttribute("jyusyolist", jyusyolist);
-		model.addAttribute("inputForm", new InputForm());
-		return "index";
-	}
+	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
+
+        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+
+        model.addAttribute("page", playerPage);
+        model.addAttribute("jyusyolist", playerPage.getContent());
+        model.addAttribute("inputForm", new InputForm());
+
+        return "index";
+    }
+
+	/**
+	 * ページ選択時
+	 */
+	@RequestMapping(value="/jyusyolist", method=RequestMethod.GET)
+
+	public String paging(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
+
+        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+
+        model.addAttribute("page", playerPage);
+        model.addAttribute("jyusyolist", playerPage.getContent());
+        model.addAttribute("inputForm", new InputForm());
+
+        return "index";
+    }
 
 	/**
 	 * 新規登録画面へ遷移

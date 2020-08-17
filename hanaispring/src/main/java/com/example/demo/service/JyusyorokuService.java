@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Jyusyoroku;
@@ -28,9 +30,20 @@ public class JyusyorokuService {
 	 * 全件検索
 	 * @return 検索結果
 	 */
-	public List<Jyusyoroku> searchAll() {
-		return jyusyorokuRepository.findAllOrderById();
-	}
+		public List<Jyusyoroku> searchAll() {
+
+			return jyusyorokuRepository.findAllOrderById();
+		}
+
+		/**
+		 * Page型で全件取得
+		 */
+//		public Page<Jyusyoroku> getAllWord(Pageable pageable) {
+//	        return jyusyorokuRepository.findAll(pageable);
+//	    }
+	    public Page<Jyusyoroku> getPlayers(Pageable pageable) {
+	        return jyusyorokuRepository.findAll(pageable);
+	    }
 
 	/**
 	 * 新規登録
@@ -61,7 +74,7 @@ public class JyusyorokuService {
 	 * 検索 serch 処理
 	 */
 	public List<Jyusyoroku> selectByName(String address) {
-		return jyusyorokuRepository.findByName2(address);
+		return jyusyorokuRepository.findByName(address);
 	}
 
 	/**

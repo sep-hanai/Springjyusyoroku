@@ -33,6 +33,41 @@
 		</div>
 	</form>
 
+<div class="pagiNation">
+  <ul>
+    <li style="display:inline;">
+      <span th:if="${page.first}">&lt;&lt;前</span>
+      <a
+        th:if="${!page.first}"
+        th:href="@{/jyusyolist(page = ${page.number} - 1)}"
+      >
+        &lt;&lt;前
+      </a>
+    </li>
+    <li
+      th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+      style="display:inline; margin-left:10px;"
+    >
+      <span th:if="${i} == ${page.number}" th:text="${i + 1}">1</span>
+      <a
+        th:if="${i} != ${page.number}"
+        th:href="@{/jyusyolist(page = ${i})}"
+      >
+        <span th:text="${i+1}">1</span>
+      </a>
+    </li>
+    <li style="display:inline; margin-left:10px;">
+      <span th:if="${page.last}">次&gt;&gt;</span>
+      <a
+        th:if="${!page.last}"
+        th:href="@{/jyusyolist(page = (${page.number} + 1))}"
+      >
+        次&gt;&gt;
+      </a>
+    </li>
+  </ul>
+</div>
+
 	<table class="table">
 		<thead>
 			<tr>
@@ -46,9 +81,11 @@
 		<tbody>
 			<tr th:each="jyusyoroku : ${jyusyolist}" th:object="${jyusyoroku}">
 				<td class="center" th:text="*{id}"></td>
-				<td th:text="*{name}"></td>
-				<td th:text="*{address}"></td>
-				<td th:text="*{tel}"></td>
+				<td th:text="${jyusyoroku.name}"></td>
+				<td th:text="${jyusyoroku.address}"></td>
+				<td
+					th:text="${jyusyoroku.tel != ''}? ${#strings.substring(jyusyoroku.tel,0,3)} + '-' + ${#strings.substring(jyusyoroku.tel,3,7)} + '-' + ${#strings.substring(jyusyoroku.tel,7,11)} : *{tel}">
+				</td>
 				<!-- nameでボタンの区別 -->
 				<!-- idのみ送信 -->
 				<td><form th:action="@{/edit}" method="post">
@@ -64,5 +101,6 @@
 			</tr>
 		</tbody>
 	</table>
+
 </body>
 </html>
