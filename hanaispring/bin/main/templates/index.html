@@ -70,12 +70,12 @@
 <div th:fragment='paginationbar'>
             <ul class='pagination pagination-centered'>
                 <li th:class="${page.firstPage}?'disabled':''" style="display:inline">
-                    <span th:if='${page.firstPage}'><<</span>
-                    <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'><<</a>
+                    <span th:if='${page.firstPage}'>&lt&lt</span>
+                    <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>&lt&lt</a>
                 </li>
                 <li th:class="${page.hasPreviousPage}? '' : 'disabled'" style="display:inline">
-                    <span th:if='${not page.hasPreviousPage}'><</span>
-                    <a th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'><</a>
+                    <span th:if='${not page.hasPreviousPage}'>&lt</span>
+                    <a th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'>&lt</a>
                 </li>
 
 
@@ -86,12 +86,12 @@
                     </a>
                 </li>
                 <li th:class="${page.hasNextPage}? '' : 'disabled'" style="display:inline">
-                    <span th:if='${not page.hasNextPage}'>></span>
-                    <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}'>></a>
+                    <span th:if='${not page.hasNextPage}'>&gt</span>
+                    <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}'>&gt</a>
                 </li>
                 <li th:class="${page.lastPage}? 'disabled' : ''" style="display:inline">
-                    <span th:if='${page.lastPage}'>>></span>
-                    <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>>></a>
+                    <span th:if='${page.lastPage}'>&gt&gt</span>
+                    <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>&gt&gt</a>
                 </li>
             </ul>
         </div>
@@ -111,10 +111,10 @@
 			<tr th:each="jyusyoroku : ${jyusyolist}" th:object="${jyusyoroku}">
 				<td class="center" th:text="*{id}"></td>
 				<td th:text="${jyusyoroku.name}"></td>
-				<td th:text="${jyusyoroku.address}"></td>
-				<td
-					th:text="${jyusyoroku.tel != ''}? ${#strings.substring(jyusyoroku.tel,0,3)} + '-' + ${#strings.substring(jyusyoroku.tel,3,7)} + '-' + ${#strings.substring(jyusyoroku.tel,7,11)} : *{tel}">
+				<td th:text="${jyusyoroku.address != null && jyusyoroku.address.length() > 13}? ${#strings.substring(jyusyoroku.address,0,13)} + '…' : ${jyusyoroku.address}">
+				<div th:if="${jyusyoroku.address != null && jyusyoroku.address.length() > 13}"><p th:text="${jyusyoroku.address}"></p></div>
 				</td>
+				<td th:text="${jyusyoroku.tel != null && jyusyoroku.tel != ''}? ${#strings.substring(jyusyoroku.tel,0,3)} + '-' + ${#strings.substring(jyusyoroku.tel,3,7)} + '-' + ${#strings.substring(jyusyoroku.tel,7,11)} : *{tel}"></td>
 				<!-- nameでボタンの区別 -->
 				<!-- idのみ送信 -->
 				<td><form th:action="@{/edit}" method="post">

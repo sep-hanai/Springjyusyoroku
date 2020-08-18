@@ -32,35 +32,13 @@ public class JyusyorokuController {
 
 	/**
 	 * 住所録一覧表示
-	 * @param model
-	 * @return 住所録一覧表示
-	 */
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String helloWorld(Model model) {
-//		List<Jyusyoroku> jyusyolist = jyusyorokuService.searchAll();
-//		model.addAttribute("jyusyolist", jyusyolist);
-//		model.addAttribute("inputForm", new InputForm());
-//		return "index";
-//	}
-
-	/**
 	 * ページングあり
 	 * @param pageable
 	 * @param model
-	 * @return
+	 * @return 一覧画面
 	 */
 	@RequestMapping(value="/", method=RequestMethod.GET)
 
-//	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
-//
-//        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
-//
-//        model.addAttribute("page", playerPage);
-//        model.addAttribute("jyusyolist", playerPage.getContent());
-//        model.addAttribute("inputForm", new InputForm());
-//
-//        return "index";
-//    }
 	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 		 Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
 		 PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
@@ -78,14 +56,6 @@ public class JyusyorokuController {
 
 	public String paging(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 
-//        Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
-//
-//        model.addAttribute("page", playerPage);
-//        model.addAttribute("jyusyolist", playerPage.getContent());
-//        model.addAttribute("inputForm", new InputForm());
-//
-//        return "index";
-//    }
 		 Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
 		 PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
 		 model.addAttribute("page", page);
@@ -224,21 +194,26 @@ public class JyusyorokuController {
 	 * @return 一覧画面表示
 	 */
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
-//	String serch(@RequestParam String address, @PageableDefault(page = 0, size = 10) Pageable pageable, InputForm inputForm, Model model) {
-//		Page<InputForm> playerPage = jyusyorokuService.selectByName(address,pageable);
-//		 PageWrapper<InputForm> page = new PageWrapper<InputForm>(playerPage, "/index");
-//		 model.addAttribute("page", page);
-//		 model.addAttribute("jyusyolist", playerPage.getContent());
-//		 model.addAttribute("jyusyolist", playerPage);
-//		return "index";
-//	}
-	String serch(@PageableDefault(page = 0, size = 10) Pageable pageable, InputForm inputForm, Model model, @RequestParam String address) {
+	String serch(@PageableDefault(page = 0, size = 10) Pageable pageable, InputForm inputForm, HttpServletRequest request, Model model, @RequestParam String address) {
+//検索機能
+		//ブランクで検索時の処理
+		if(address == "") {
+			 Page<Jyusyoroku> playerPage = jyusyorokuService.getPlayers(pageable);
+			 PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
+			 model.addAttribute("page", page);
+			 model.addAttribute("jyusyolist", playerPage.getContent());
+	        model.addAttribute("inputForm", new InputForm());
+
+	        return "index";
+	    }else {
+	    //address入力検索時の処理
 		Page<Jyusyoroku> playerPage = jyusyorokuService.selectByName(address, pageable);
 		PageWrapper<Jyusyoroku> page = new PageWrapper<Jyusyoroku>(playerPage, "/index");
 		model.addAttribute("page", page);
 		model.addAttribute("jyusyolist", playerPage.getContent());
 
 		return "index";
+	}
 	}
 
 }

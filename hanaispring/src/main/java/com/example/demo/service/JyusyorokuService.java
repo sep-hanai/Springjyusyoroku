@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -29,20 +28,10 @@ public class JyusyorokuService {
 	/**
 	 * 全件検索
 	 * @return 検索結果
+	 * Page型で全件取得
 	 */
-		public List<Jyusyoroku> searchAll() {
-
-			return jyusyorokuRepository.findAllOrderById();
-		}
-
-		/**
-		 * Page型で全件取得
-		 */
-//		public Page<Jyusyoroku> getAllWord(Pageable pageable) {
-//	        return jyusyorokuRepository.findAll(pageable);
-//	    }
 	    public Page<Jyusyoroku> getPlayers(Pageable pageable) {
-	        return jyusyorokuRepository.findAll(pageable);
+	        return jyusyorokuRepository.findAllOrderById(pageable);
 	    }
 
 	/**
@@ -73,9 +62,6 @@ public class JyusyorokuService {
 	/**
 	 * 検索 serch 処理
 	 */
-//	public List<Jyusyoroku> selectByName(String address) {
-//		return jyusyorokuRepository.findByName(address);
-//	}
 
 	public Page<Jyusyoroku> selectByName(String address, Pageable pageable) {
 		return jyusyorokuRepository.findByName(address, pageable);
