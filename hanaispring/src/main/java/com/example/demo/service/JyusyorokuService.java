@@ -55,10 +55,13 @@ public class JyusyorokuService {
 	 * @param id
 	 * @return
 	 */
-	public Optional<Jyusyoroku> selectById(long id) {
+//	public Optional<Jyusyoroku> selectById(long id) {
+//		return jyusyorokuRepository.findById(id);
+//	}
+
+	public Optional<Jyusyoroku> selectById(Long id) {
 		return jyusyorokuRepository.findById(id);
 	}
-
 	/**
 	 * 検索 serch 処理
 	 */

@@ -32,22 +32,14 @@
 	<!-- delete_flgはaddcheckからhiddenで送る -->
 
 	<!-- エラー表示 -->
-		<!-- 		<ul class="erroeList">
-			<li th:if="${#fields.hasErrors('name')}"><span
-				th:errors="*{name}">Error message</span></li>
-			<li th:if="${#fields.hasErrors('address')}"><span
-				th:errors="*{address}">Error message</span></li>
-			<li th:if="${#fields.hasErrors('tel')}"><span
-				th:errors="*{tel}">Error message</span></li>
-		</ul>-->
+    <form>
 		<div th:if="${errAll}">
-			<ul
-				style="padding: 10px; margin-bottom: 10px; border: 5px double #333333;">
+			<ul style="list-style: none; border: 5px double #333333; width: 400px; padding: 10px; margin: 10px 50px;">
 			<li th:if="${errAll[0]}"><span th:text="${errAll[0]}">errmsg</span></li>
 			<li th:if="${errAll[1]}"><span th:text="${errAll[1]}">errmsg</span></li>
 			<li th:if="${errAll[2]}"><span th:text="${errAll[2]}">errmsg</span></li>
 			</ul>
-			</div>
+		</div>
 	</form>
 </body>
 </html>

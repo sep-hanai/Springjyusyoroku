@@ -9,7 +9,7 @@ public class InputForm implements Serializable{
 	/**
 	 * id
 	 */
-	private long id;
+	private Long id;
 
 	/**
 	 * name

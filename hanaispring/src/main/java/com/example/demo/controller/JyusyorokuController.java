@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -121,7 +123,18 @@ public class JyusyorokuController {
 	String edit(@RequestParam Long id, @ModelAttribute InputForm inputForm) {
 		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectById(id);
 		Jyusyoroku jyusyoroku = jyusyoOpt.get();
+	//Formにコピー
 		BeanUtils.copyProperties(jyusyoroku, inputForm);
+	//Telを抜き出してハイフンを入れる
+		String tel1 = inputForm.getTel();
+		String tel = "";
+		if (tel1.length() == 11) {
+			Pattern p = Pattern.compile("(\\d{3})(\\d{4})(\\d{4})");
+			Matcher m = p.matcher(tel1);
+			tel = m.replaceAll("$1-$2-$3");
+		}
+	//ハイフン入りのものをFormに返す
+		inputForm.setTel(tel);
 		return "edit";
 	}
 
@@ -173,7 +186,18 @@ public class JyusyorokuController {
 	String delete(@RequestParam Long id, @ModelAttribute InputForm inputForm) {
 		Optional<Jyusyoroku> jyusyoOpt = jyusyorokuService.selectById(id);
 		Jyusyoroku jyusyoroku = jyusyoOpt.get();
+    //Formにコピー
 		BeanUtils.copyProperties(jyusyoroku, inputForm);
+	//Telを抜き出してハイフンを入れる
+		String tel1 = inputForm.getTel();
+		String tel = "";
+		if (tel1.length() == 11) {
+			Pattern p = Pattern.compile("(\\d{3})(\\d{4})(\\d{4})");
+			Matcher m = p.matcher(tel1);
+			tel = m.replaceAll("$1-$2-$3");
+		}
+	//ハイフン入りのものをFormに返す
+		inputForm.setTel(tel);
 		return "delete";
 	}
 

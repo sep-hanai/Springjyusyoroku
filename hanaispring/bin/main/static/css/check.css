@@ -4,3 +4,25 @@ body {
 	width: 90%;
 	margin: 0 auto;
 }
+
+.table {
+	margin-left: 50px;
+}
+
+.table th, .table td {
+	height: 30px;
+	font-size: 15px;
+}
+
+.table td{
+	width: 300px;
+}
+
+.btn2 {
+	margin-left: 130px;
+}
+
+.btn {
+	width: 145px;
+	margin: 10px 5px;
+}

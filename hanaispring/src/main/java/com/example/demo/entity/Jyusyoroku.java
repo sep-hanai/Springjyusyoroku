@@ -24,7 +24,7 @@ public class Jyusyoroku implements Serializable{
 @Id
 @Column(name="id")
 @GeneratedValue(strategy=GenerationType.IDENTITY)
-private long id;
+private Long id;
 
 /**
  * 名前
