@@ -1,25 +1,66 @@
 @charset "UTF-8";
 
-.table {
+body {
 	width: 90%;
+	margin: 0 auto;
+}
+
+.table {
+	width: 100%;
 	border-collapse: collapse;
-	font-size: 12px;
 }
 
 .table th, .table td {
-	border: 1px solid #ddd;
 	padding: 6px;
+	text-align: center;
+	border: 2px solid #000;
 }
 
 .table th {
-	background-color: #F2F2F2;
+	background-color: #6699FF;
 }
 
-.center {
-	text-align: center;
-}
 .add-input {
 	width: 100px;
 	height: 25px"
 }
+.id {
+	width: 10%;
+}
 
+.name .tel .function {
+	width: 20%;
+}
+
+.address {
+	width: 30%;
+}
+
+.btn-outline {
+	width: 100%;
+}
+.addressTop {
+	position: relative;
+}
+
+.addressText {
+	display: none;
+	position: absolute;
+	padding: 5px;
+	top:-20px;
+	margin-left:10px;
+	border: 1px solid #333333;
+    background-color:white;
+    z-index:10;
+    width:300px;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.addressText:after {
+	position: absolute;
+}
+
+.addressTop:hover .addressText {
+	display: inline;
+}

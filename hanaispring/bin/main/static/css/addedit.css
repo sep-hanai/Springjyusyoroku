@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+body {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.table {
+	margin-left: 50px;
+}
+
+.table input{
+	width: 300px;
+}
+
+.btn2 {
+	margin-left: 130px;
+}
+
+.btn {
+	width: 145px;
+	margin: 5px;
+}

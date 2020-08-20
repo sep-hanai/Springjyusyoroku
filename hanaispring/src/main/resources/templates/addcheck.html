@@ -3,35 +3,34 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>登録内容確認</title>
-<link href="/css/addcheck.css" rel="stylesheet"></link>
-<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/CSS/check.css}"></link>
+<meta charset="UTF-8" />
 </head>
 
 <body>
 	<h1>住所録管理システム：住所録登録</h1>
-	<form th:action="@{/create}" th:object="${inputForm}"
-		method="post">
+	<form th:action="@{/create}" th:object="${inputForm}" method="post">
 		<table>
 			<tr>
 				<th class="cell_title">名前＊：</th>
-				<td><p th:text="*{name}"></td>
+				<td th:text="*{name}"></td>
 			</tr>
 			<tr>
 				<th class="cell_title">住所＊：</th>
-				<td><p th:text="*{address}"></td>
+				<td th:text="*{address}"></td>
 			</tr>
 			<tr>
 				<th class="cell_title">電話番号：</th>
-				<td><p th:text="*{tel}"></td>
+				<td th:text="*{tel}"></td>
 			</tr>
 		</table>
 		<input type="hidden" name="name" th:value="*{name}"> <input
 			type="hidden" name="address" th:value="*{address}"> <input
-			type="hidden" name="tel" th:value="*{tel}"> <input
-			type="hidden" name="delete_flg" th:value="0">
+			type="hidden" name="tel" th:value="*{#strings.replace(tel, '-', '')}">
+		<input type="hidden" name="delete_flg" th:value="0">
 		<div class="btn2">
-			<input type="submit" value="登録" class="btn">
-			<input th:formaction="@{/back}" type="submit" value="戻る" class="btn">
+			<input type="submit" value="登録" class="btn"> <input
+				th:formaction="@{/back}" type="submit" value="戻る" class="btn">
 		</div>
 	</form>
 </body>

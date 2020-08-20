@@ -80,9 +80,24 @@ public class JyusyorokuController {
 	* @return 確認画面表示
 	*/
 	@RequestMapping(value = "/addcheck", method = RequestMethod.POST)
-	public String addcheck(@ModelAttribute("inputForm") InputForm form) {
+	public String addcheck(@ModelAttribute("inputForm") InputForm form, HttpServletRequest request, Model model) {
+		//値の受け取り
+				String name = request.getParameter("name");
+				String address = request.getParameter("address");
+				String tel = request.getParameter("tel");
+			//serviceからメソッド呼び出し
+				JyusyorokuService svc = new JyusyorokuService();
+				String errAll[];
+				errAll = svc.err(name, address, tel);
+			//エラー判定
+			//エラー有り
+				if (errAll [0] != null || errAll [1] != null || errAll [2] != null) {
+				model.addAttribute("errAll", errAll);
+				return "add";
+				}else {
+			//エラー無し
 		return "addcheck";
-	}
+	}}
 
 	/**
 	 * 登録処理

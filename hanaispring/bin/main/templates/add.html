@@ -3,14 +3,14 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>住所録登録</title>
-<link href="/css/add.css" rel="stylesheet"></link>
-<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/CSS/addedit.css}"></link>
+<meta charset="UTF-8" />
 </head>
 
 <body>
 	<h1>住所録管理システム：住所録登録</h1>
 	<form th:action="@{/addcheck}" th:object="${inputForm}" method="post">
-		<table>
+		<table class="table">
 			<tr>
 				<th class="cell_title">名前＊：</th>
 				<td><input type="text" th:field="*{name}"></td>
@@ -30,5 +30,24 @@
 		</div>
 	</form>
 	<!-- delete_flgはaddcheckからhiddenで送る -->
+
+	<!-- エラー表示 -->
+		<!-- 		<ul class="erroeList">
+			<li th:if="${#fields.hasErrors('name')}"><span
+				th:errors="*{name}">Error message</span></li>
+			<li th:if="${#fields.hasErrors('address')}"><span
+				th:errors="*{address}">Error message</span></li>
+			<li th:if="${#fields.hasErrors('tel')}"><span
+				th:errors="*{tel}">Error message</span></li>
+		</ul>-->
+		<div th:if="${errAll}">
+			<ul
+				style="padding: 10px; margin-bottom: 10px; border: 5px double #333333;">
+			<li th:if="${errAll[0]}"><span th:text="${errAll[0]}">errmsg</span></li>
+			<li th:if="${errAll[1]}"><span th:text="${errAll[1]}">errmsg</span></li>
+			<li th:if="${errAll[2]}"><span th:text="${errAll[2]}">errmsg</span></li>
+			</ul>
+			</div>
+	</form>
 </body>
 </html>
